@@ -1,5 +1,4 @@
 import express from "express";
-import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import cors from "cors"; 
@@ -10,19 +9,19 @@ import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import userRoutes from "./routes/user.routes.js";
 
-dotenv.config();
-
 const app = express(); 
+
+// Set your MongoDB URI and Node environment here
+const NODE_ENV = "development"; // Change to "production" when deploying
 
 // CORS configuration
 const corsOptions = {
-    origin: process.env.NODE_ENV === "production" 
+    origin: NODE_ENV === "production" 
         ? "https://chat-apps-o69k.vercel.app" // Production URL
         : "http://localhost:3000", // Development URL
     methods: ["GET", "POST"],
     credentials: true, 
 };
-
 
 // Middleware
 app.use(cors(corsOptions)); 
@@ -34,14 +33,14 @@ app.get("/api/test", (req, res) => {
     res.status(200).json({ message: "help me!" });
 });
 app.get("/", (req, res) => {
-    res.status(200).json({ message: "This the success that i want from you!" });
+    res.status(200).json({ message: "This is the success that I want from you!" });
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Connected to MongoDB");
 
@@ -67,7 +66,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         });
 
         // Start the server
-        const PORT = process.env.PORT || 3000;
+        const PORT = 3000; // or any port you prefer
         server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);
         });
