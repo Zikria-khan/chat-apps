@@ -12,12 +12,12 @@ import userRoutes from "./routes/user.routes.js";
 const app = express(); 
 
 // Set your MongoDB URI and Node environment here
-const NODE_ENV = "production"; // Change to "production" when deploying
+const NODE_ENV = "development"; // Change to "production" when deploying
 
 // CORS configuration
 const corsOptions = {
     origin: NODE_ENV === "production" 
-        ? "https://chat-apps-o69k.vercel.app" // Production URL
+        ? "https://chat-apps-o69k.vercel.app/" // Production URL
         : "http://localhost:3000", // Development URL
     methods: ["GET", "POST"],
     credentials: true, 
