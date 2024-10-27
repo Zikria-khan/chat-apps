@@ -3,36 +3,38 @@ import path from "path";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
+import cors from "cors"; 
+import { Server } from "socket.io"; 
+import http from "http"; 
 
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import userRoutes from "./routes/user.routes.js";
 
-dotenv.config(); // Load environment variables
+dotenv.config(); 
 
-const app = express(); // Create an instance of Express
+const app = express(); 
 
 // CORS configuration
 const corsOptions = {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-    credentials: true
+    origin: 'http://localhost:3000', // Your client URL
+    methods: ["GET", "POST"],
+    credentials: true, 
 };
-
-app.use(cors(corsOptions)); // Apply CORS middleware
-app.use(helmet()); // Secure Express apps by setting various HTTP headers
-app.use(morgan("dev")); // Log incoming requests
+const __dirname = path.resolve();
+// Middleware
+app.use(cors(corsOptions)); 
 app.use(express.json());
 app.use(cookieParser());
 
-// Serve static files from the frontend build directory
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-app.use(express.static(path.join(__dirname, "frontend", "dist"))); // Ensure correct path
-
 // Routes
+
+app.get("/api/test", (req, res) => {
+    res.status(200).json({ message: "Success!" });
+});
+app.get("/api",(req,res)=>{
+ res.status.json({message:"Success"})   
+})
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
@@ -41,37 +43,52 @@ app.use("/api/users", userRoutes);
 app.get("/", (req, res) => {
     res.status(200).json({ message: "Success!" });
 });
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-// Handle all other routes by serving the index.html
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"), (err) => {
+// Redirect all unknown routes to the frontend's index.html
+app.get("*", (_, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"), (err) => {
         if (err) {
-            console.error(err);
+            console.error("Error serving index.html:", err);
             res.status(err.status).end();
         }
     });
 });
 
-// Connect to MongoDB and start the server
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
-
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Connected to MongoDB");
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+
+        // Create the HTTP server
+        const server = http.createServer(app);
+        
+        // Initialize Socket.IO with the HTTP server
+        const io = new Server(server, {
+            cors: corsOptions,
+        });
+
+        // Socket.IO event handling
+        io.on("connection", (socket) => {
+            console.log("A user connected");
+            socket.on("message", (msg) => {
+                console.log("Message received:", msg);
+                io.emit("message", msg);
+            });
+
+            socket.on("disconnect", () => {
+                console.log("User disconnected");
+            });
+        });
+
+        // Start the server
+        const PORT = process.env.PORT || 3000;
+        server.listen(PORT, () => {
+            console.log(`Server running on http://localhost:${PORT}`);
         });
     })
     .catch((error) => {
         console.error("Failed to connect to MongoDB:", error.message);
     });
 
-// Global error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
-
-// Export the app for Vercel if needed
-export default app;
+// No longer exporting the app instance
