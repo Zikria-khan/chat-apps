@@ -33,7 +33,7 @@ app.get("/api/test", (req, res) => {
     res.status(200).json({ message: "help me!" });
 });
 app.get("/", (req, res) => {
-    res.status(200).json({ message: "This is the success that I want from you!" });
+    res.status(200).json({ message: "This is the success that I want from me!" });
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
