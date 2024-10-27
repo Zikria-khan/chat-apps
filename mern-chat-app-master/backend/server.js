@@ -16,10 +16,13 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-    origin: 'http://localhost:3000', // Your client URL for development
+    origin: process.env.NODE_ENV === "production" 
+        ? "https://chat-apps-o69k.vercel.app" // Production URL
+        : "http://localhost:3000", // Development URL
     methods: ["GET", "POST"],
     credentials: true, 
 };
+
 
 // Middleware
 app.use(cors(corsOptions)); 
