@@ -12,7 +12,7 @@ import userRoutes from "./routes/user.routes.js";
 const app = express(); 
 
 // Set your MongoDB URI and Node environment here
-const NODE_ENV = "development"; // Change to "production" when deploying
+const NODE_ENV = "development"; // Change to "production" when dep
 
 // CORS configuration
 const corsOptions = {
