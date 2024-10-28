@@ -39,7 +39,7 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/users", userRoutes);
 
 // Connect to MongoDB and start the server
-mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Connected to MongoDB");
 
