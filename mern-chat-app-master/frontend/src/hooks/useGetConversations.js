@@ -9,7 +9,7 @@ const useGetConversations = () => {
 		const getConversations = async () => {
 			setLoading(true);
 			try {
-				const res = await fetch("http://chat-apps-7czi.vercel.app/api/users");
+				const res = await fetch("http://chat-apps-d3x5.vercel.app/api/users");
 				const data = await res.json();
 				if (data.error) {
 					throw new Error(data.error);

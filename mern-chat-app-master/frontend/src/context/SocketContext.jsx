@@ -15,10 +15,7 @@ export const SocketContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		// Determine the correct URL based on the environment
-		const socketUrl =
-			process.env.NODE_ENV === "production"
-				? "https://chat-app-yt.onrender.com" // Your production server URL
-				: "http://localhost:3000"; // Local development server
+		const socketUrl = "http://chat-apps-d3x5.vercel.app" // Your production server URL
 
 		if (authUser) {
 			const socket = io(socketUrl, {

@@ -11,12 +11,13 @@ const useLogin = () => {
 		if (!success) return;
 		setLoading(true);
 		try {
-			const res = await fetch("http://chat-apps-7czi.vercel.app/api/auth/login", {
+			const res = await fetch("http://chat-apps-d3x5.vercel.app/api/auth/login", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
+				credentials: "include",  // Include credentials for cookies
 				body: JSON.stringify({ username, password }),
-			  });
-			  
+			});
+			
 			  if (!res.ok) {
 				const errorText = await res.text();
 				throw new Error(errorText || "Failed to log in");

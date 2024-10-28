@@ -18,17 +18,17 @@ const app = express();
 const NODE_ENV = process.env.NODE_ENV || "development";
 const PORT = process.env.PORT || 3000;
 
-// CORS configuration to allow all origins
-const corsOptions = {
+// CORS configuration to allow all originsconst corsOptions = {
     origin: "http://localhost:3000",
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"], // Add required headers here
+    allowedHeaders: ["Content-Type", "Authorization"], // Ensures preflight request headers are allowed
 };
 
-// Middleware
+// Allow OPTIONS method
+app.options("*", cors(corsOptions)); // This will handle preflight
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));  // Enable preflight for all routes
+
 app.use(express.json());
 app.use(cookieParser());
 
