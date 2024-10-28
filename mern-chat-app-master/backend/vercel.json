@@ -1,7 +1,7 @@
 {
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "http://localhost:3000" },
         { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
@@ -10,10 +10,9 @@
       ]
     }
   ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/server.js" } // Redirects API calls to your server
+  ],
   "version": 2,
-  "builds": [{ "src": "server.js", "use": "@vercel/node" }],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "server.js" },
-    { "src": "/(.*)", "dest": "server.js" }
-  ]
+  "builds": [{ "src": "server.js", "use": "@vercel/node" }]
 }
