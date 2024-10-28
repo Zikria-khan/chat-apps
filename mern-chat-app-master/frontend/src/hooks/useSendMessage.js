@@ -9,7 +9,7 @@ const useSendMessage = () => {
 	const sendMessage = async (message) => {
 		setLoading(true);
 		try {
-			const res = await fetch(`http://chat-apps-o69k.vercel.app/api/messages/send/${selectedConversation._id}`, {
+			const res = await fetch(`http://chat-apps-7czi.vercel.app/api/messages/send/${selectedConversation._id}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",

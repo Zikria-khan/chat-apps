@@ -5,6 +5,7 @@ import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 import authRoutes from "./routes/auth.routes.js";
@@ -19,13 +20,15 @@ const PORT = process.env.PORT || 3000;
 
 // CORS configuration to allow all origins
 const corsOptions = {
-    origin: "*", // Allows all origins
-    methods: ["GET", "POST"],
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"], // Add required headers here
 };
 
 // Middleware
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));  // Enable preflight for all routes
 app.use(express.json());
 app.use(cookieParser());
 
