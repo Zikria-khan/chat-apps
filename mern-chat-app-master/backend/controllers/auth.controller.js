@@ -50,7 +50,6 @@ export const signup = async (req, res) => {
         }
     }
 };
-
 export const login = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -61,11 +60,10 @@ export const login = async (req, res) => {
             return res.status(400).json({ error: "Invalid username or password" });
         }
 
-        const token = generateToken(user._id); // Assuming you have a function to generate a JWT
-        generateTokenAndSetCookie(user._id, res); // Optionally set as a cookie if required
+        // Call your token generation function
+        generateTokenAndSetCookie(user._id, res);
 
         res.status(200).json({
-            token, // Send the token back to the client
             _id: user._id,
             fullName: user.fullName,
             username: user.username,
