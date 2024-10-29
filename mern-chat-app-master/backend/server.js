@@ -12,12 +12,11 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:3000',
-    methods: 'GET,POST,OPTIONS',
-    allowedHeaders: 'Content-Type, Authorization',
-    credentials: true
+    origin: 'http://localhost:3000',  // Explicitly specify your frontend URL
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true  // This is needed to allow cookies with CORS
   }));
-  
 // Your routes and middleware here
 
 

@@ -10,13 +10,13 @@ const useLogin = () => {
 		const success = handleInputErrors(username, password);
 		if (!success) return;
 		setLoading(true);
-		try {
-			const res = await fetch("https://chat-apps-qbkv.vercel.app/api/auth/login", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				credentials: "include",  // Include credentials for cookies
-				body: JSON.stringify({ username, password }),
-			});
+		try {const res = await fetch("https://chat-apps-qbkv.vercel.app/api/auth/login", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			credentials: "include",  // Ensures cookies are included
+			body: JSON.stringify({ username, password }),
+		  });
+		  
 			
 			  if (!res.ok) {
 				const errorText = await res.text();
