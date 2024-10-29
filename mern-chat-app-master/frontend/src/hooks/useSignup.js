@@ -12,7 +12,7 @@ const useSignup = () => {
 
 		setLoading(true);
 		try {
-			const res = await fetch("http://chat-apps-d3x5.vercel.app/api/auth/signup", {
+			const res = await fetch("https://chat-apps-qbkv.vercel.app/api/auth/signup", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ fullName, username, password, confirmPassword, gender }),

@@ -11,7 +11,7 @@ const useLogin = () => {
 		if (!success) return;
 		setLoading(true);
 		try {
-			const res = await fetch("http://chat-apps-d3x5.vercel.app/api/auth/login", {
+			const res = await fetch("https://chat-apps-qbkv.vercel.app/api/auth/login", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				credentials: "include",  // Include credentials for cookies
