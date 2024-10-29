@@ -52,27 +52,29 @@ export const signup = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-	try {
-		const { username, password } = req.body;
-		const user = await User.findOne({ username });
-		const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });
+        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
 
-		if (!user || !isPasswordCorrect) {
-			return res.status(400).json({ error: "Invalid username or password" });
-		}
+        if (!user || !isPasswordCorrect) {
+            return res.status(400).json({ error: "Invalid username or password" });
+        }
 
-		generateTokenAndSetCookie(user._id, res);
+        const token = generateToken(user._id); // Assuming you have a function to generate a JWT
+        generateTokenAndSetCookie(user._id, res); // Optionally set as a cookie if required
 
-		res.status(200).json({
-			_id: user._id,
-			fullName: user.fullName,
-			username: user.username,
-			profilePic: user.profilePic,
-		});
-	} catch (error) {
-		console.log("Error in login controller", error.message);
-		res.status(500).json({ error: "Internal Server Error" });
-	}
+        res.status(200).json({
+            token, // Send the token back to the client
+            _id: user._id,
+            fullName: user.fullName,
+            username: user.username,
+            profilePic: user.profilePic,
+        });
+    } catch (error) {
+        console.log("Error in login controller", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
 export const logout = (req, res) => {
