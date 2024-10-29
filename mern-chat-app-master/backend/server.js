@@ -21,7 +21,6 @@ app.use(cors({
 // Your routes and middleware here
 
 
-app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
