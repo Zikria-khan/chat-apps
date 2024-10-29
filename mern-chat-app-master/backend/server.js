@@ -11,12 +11,17 @@ import userRoutes from "./routes/user.routes.js";
 const app = express();
 
 // CORS configuration
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    methods: ["GET", "POST", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"]
-};
+
+app.use(cors({
+  origin: '*',  // Allow all origins (adjust in production for security)
+  methods: 'GET,POST,OPTIONS',
+  allowedHeaders: 'Content-Type, Authorization',
+  credentials: true
+}));
+
+// Your routes and middleware here
+
+
 app.use(cors(corsOptions));
 
 // Middleware
