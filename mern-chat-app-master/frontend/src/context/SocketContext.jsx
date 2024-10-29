@@ -15,7 +15,7 @@ export const SocketContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		// Determine the correct URL based on the environment
-		const socketUrl = "http://chat-apps-d3x5.vercel.app" // Your production server URL
+		const socketUrl = "https://chat-apps-qbkv.vercel.app" // Your production server URL
 
 		if (authUser) {
 			const socket = io(socketUrl, {
