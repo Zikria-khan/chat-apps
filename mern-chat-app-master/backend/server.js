@@ -22,7 +22,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http:chat-apps-lemon.vercel.app',
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
