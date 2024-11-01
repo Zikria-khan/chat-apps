@@ -11,7 +11,7 @@ const useGetConversations = () => {
             setLoading(true);
             try {
                 const token = localStorage.getItem("token"); // Retrieve the token
-                const res = await fetch("https://chat-apps-qbkv.vercel.app/api/users", {
+                const res = await fetch("https://chat-apps-gf9k.vercel.app/api/users", {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`, // Include the token
